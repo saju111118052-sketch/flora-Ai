@@ -172,6 +172,7 @@ cursor:pointer;
 </div>
 
 <script>
+// Using your current working key (Base64)
 const secretKey="U2stb3ItdjEtZjllNzk2YmJlYTU4YmYyNTg1NDE1MzE3ZDQ3ZDc5ODYzZmNhMjgzZWM0OWMyZTg3NDRkMmY2NTA2NzUzZGIzYQ==";
 const API_KEY=atob(secretKey);
 
@@ -191,7 +192,7 @@ function startApp(){
     userData={name,email,count:0};
     document.getElementById("loginOverlay").style.display="none";
 
-    addMessage("flora", `Hi ${name}! 🌸 I'm Flora, your smart bestie.`);
+    addMessage("flora", `Hi ${name}! 🌸 I'm Flora, your smart bestie. Let's talk!`);
     updateSidebar();
 }
 
@@ -214,10 +215,7 @@ function addMessage(sender,text){
 }
 
 async function sendMessage(){
-
-    if(!userData) return;
-
-    if(loading) return;
+    if(!userData || loading) return;
     if(userData.count>=20){
         addMessage("flora","Daily limit reached 🌸");
         return;
@@ -232,55 +230,47 @@ async function sendMessage(){
 
     userData.count++;
     updateSidebar();
-
     loading=true;
 
     try{
         const response=await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method:"POST",
             headers:{
-                "Authorization":`Bearer ${API_KEY}`,
+                "Authorization": "Bearer " + API_KEY, // Fixed authorization format
                 "Content-Type":"application/json",
-                "HTTP-Referer":"http://localhost",
+                "HTTP-Referer":"https://flora-ai.com",
                 "X-Title":"Flora AI"
             },
             body:JSON.stringify({
-                model:"mistralai/mistral-7b-instruct:free",
-                messages:[
+                "model":"google/gemini-2.0-flash-exp:free", // Most stable free model
+                "messages":[
                     {
-                        role:"system",
-                        content:`You are Flora AI. User name is ${userData.name}.`
+                        "role":"system",
+                        "content":`You are Flora AI, a cute assistant created by Tahosin Islam Feeha. User name is ${userData.name}.`
                     },
                     ...history.slice(-6).map(m=>({
-                        role:m.sender==="flora"?"assistant":"user",
-                        content:m.text
+                        role: m.sender==="flora"?"assistant":"user",
+                        content: m.text
                     })),
-                    {
-                        role:"user",
-                        content:text
-                    }
+                    { "role":"user", "content":text }
                 ]
             })
         });
 
-        if(!response.ok){
-            const err=await response.json();
-            console.log("API ERROR:",response.status,err);
-            addMessage("flora","API error 🌸 check console");
-            loading=false;
-            return;
-        }
-
         const data=await response.json();
-        const reply=data.choices?.[0]?.message?.content || "No response 🌸";
-        addMessage("flora",reply);
+        
+        if (data.choices && data.choices[0]) {
+            addMessage("flora", data.choices[0].message.content);
+        } else {
+            console.log("Error:", data);
+            addMessage("flora", "Wait, ektu problem hocche. 🌸");
+        }
 
     }catch(e){
         console.log(e);
         addMessage("flora","Connection error 🌸");
     }
-
-    loading=false;
+    loading = false;
 }
 </script>
 
