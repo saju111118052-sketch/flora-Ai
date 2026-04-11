@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flora AI - Smart Bestie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { display: flex; height: 100vh; margin: 0; font-family: 'Poppins', sans-serif; background: #090212; overflow: hidden; }
+        .sidebar { width: 260px; background: #0d0d1a; color: white; padding: 25px; display: flex; flex-direction: column; border-right: 1px solid #222; }
+        .sidebar h3 { color: #ff007f; margin-bottom: 5px; }
+        .dev-info { font-size: 11px; color: #888; margin-bottom: 20px; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; background: #fdfdfd; }
+        .chat-header { display: flex; align-items: center; padding: 15px 25px; background: white; border-bottom: 1px solid #eee; gap: 15px; }
+        .chibi-img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ff007f; object-fit: cover; }
+        .messages-area { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #f9f9f9; }
+        .msg { max-width: 80%; padding: 12px 18px; border-radius: 18px; font-size: 14px; line-height: 1.6; word-wrap: break-word; }
+        .user-msg { align-self: flex-end; background: #ff007f; color: white; border-bottom-right-radius: 2px; }
+        .flora-msg { align-self: flex-start; background: white; color: #333; border-bottom-left-radius: 2px; border-left: 4px solid #ff007f; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        #typing { padding: 10px 25px; color: #ff007f; font-size: 12px; font-style: italic; display: none; }
+        .input-area { padding: 20px; background: white; border-top: 1px solid #eee; display: flex; gap: 12px; }
+        input#userInput { flex: 1; padding: 14px; border: 1px solid #ddd; border-radius: 12px; outline: none; font-family: inherit; }
+        .send-btn { background: #ff007f; color: white; border: none; padding: 0 25px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .send-btn:hover { background: #e60073; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h3>Flora AI 🌸</h3>
+        <div class="dev-info">Developer: Tahosin Islam Feeha</div>
+        <div style="font-size: 12px; color: #ff007f; margin-top: 20px;">● Power: OpenRouter</div>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <img src="flora_chibi.png" alt="Flora" class="chibi-img">
+            <div><strong>Flora AI</strong><br><small style="color: #2ecc71;">Online | Smart Mode</small></div>
+        </div>
+        <div class="messages-area" id="chatBox">
+            <div class="msg flora-msg">Hello! I'm back in my beautiful pink look! How can I help you today? 🌸</div>
+        </div>
+        <div id="typing">Flora is thinking...</div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Ask Flora anything..." onkeypress="if(event.key==='Enter') sendMessage()">
+            <button class="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = "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";
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const typing = document.getElementById('typing');
+            const chatBox = document.getElementById('chatBox');
+            const text = input.value.trim();
+            if (!text) return;
+
+            chatBox.innerHTML += `<div class="msg user-msg">${text}</div>`;
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+            typing.style.display = "block";
+
+            try {
+                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + API_KEY
+                    },
+                    body: JSON.stringify({
+                        "model": "google/gemini-2.0-flash-exp:free",
+                        "messages": [{"role": "user", "content": text}]
+                    })
+                });
+
+                const data = await response.json();
+                typing.style.display = "none";
+
+                if (data.choices && data.choices[0].message) {
+                    const reply = data.choices[0].message.content;
+                    chatBox.innerHTML += `<div class="msg flora-msg">${reply}</div>`;
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                typing.style.display = "none";
+                chatBox.innerHTML += `<div class="msg flora-msg">Still having trouble connecting! Make sure you opened Chrome using the modified shortcut. 🌸</div>`;
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>

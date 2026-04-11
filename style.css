@@ -1,0 +1,142 @@
+/* style.css (Complete updated code) */
+
+/* 1. Reset & Global Variables */
+:root {
+  --neon-pink: #ff007f;
+  --magenta: #e100ff;
+  --dark-bg: #090212; /* Deep purple-black ground below card */
+  --glass: rgba(255, 255, 255, 0.05); /* Very faint glass tint */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--dark-bg);
+  background-image: radial-gradient(circle at center, rgba(144, 19, 254, 0.2) 0%, var(--dark-bg) 80%); /* Subtle purple ground */
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.main-outer {
+  width: 90%;
+  max-width: 1100px;
+  padding: 20px 0;
+}
+
+/* Header & Nav */
+.main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+.logo { font-size: 24px; font-weight: 700; color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { text-decoration: none; color: white; font-size: 14px; opacity: 0.8; transition: opacity 0.3s; }
+.nav-links a:hover { color: var(--neon-pink); opacity: 1; }
+.signup-link { text-decoration: none; color: white; font-size: 11px; opacity: 0.6; }
+
+/* 2. Updated Hero Card Styling (Using the new Image as Background) */
+.hero-card {
+  /* THE BIG CHANGE: Set the background to your uploaded image */
+  background-image: url('hero_bg.jpg');
+  background-size: cover; /* Ensures image covers the entire card area */
+  background-position: center; /* Centers the image, big flora on right */
+  background-repeat: no-repeat;
+  
+  /* The Glassmorphism Effect */
+  background-color: var(--glass); /* Glass tint OVER the image */
+  backdrop-filter: blur(10px); /* Background blur inside card */
+  border: 1.5px solid rgba(255, 0, 127, 0.4); /* Neon border */
+  border-radius: 25px;
+  padding: 50px;
+  display: flex;
+  min-height: 400px;
+  position: relative;
+  box-shadow: 0 0 30px rgba(255, 0, 127, 0.15); /* Soft neon glow around card */
+  overflow: hidden; /* To prevent image bleed at round corners */
+}
+
+/* 3. content-left positioning (Ensure Chibi, Text, and Button are on the left) */
+.content-left {
+  width: 55%; /* Text area only takes up the left 55% */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center content */
+  position: relative;
+  z-index: 2; /* Text over big background flora */
+}
+
+.chibi-circle {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 2px solid var(--neon-pink);
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+.chibi-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+.main-heading { font-size: 38px; font-weight: 700; line-height: 1.1; margin-bottom: 15px; }
+.main-description { font-size: 15px; opacity: 0.8; margin-bottom: 25px; max-width: 400px; }
+
+/* Global Neon Button Styling */
+.neon-btn {
+  background: linear-gradient(135deg, var(--neon-pink) 0%, var(--magenta) 100%);
+  color: white; border: none; border-radius: 8px;
+  padding: 10px 25px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+}
+.neon-btn:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(255, 0, 127, 0.7); }
+
+/* Buttons */
+.start-chat-btn { padding: 12px 30px; font-size: 15px; }
+.login-btn { padding: 8px 20px; font-size: 12px; }
+
+/* 4. Placeholder (Advertisement) and Modal Styling remain similar */
+.ad-banner { width: 100%; text-align: center; margin-top: 30px; padding: 15px; border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 10px; font-size: 12px; color: #555; }
+.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+.modal-content { background: #150525; margin: 10% auto; padding: 30px; border: 1px solid var(--neon-pink); border-radius: 20px; width: 350px; position: relative; text-align: center; }
+.close-btn { position: absolute; right: 20px; top: 10px; font-size: 20px; cursor: pointer; color: #fff; }
+.modal-heading { color: var(--neon-pink); margin-bottom: 15px; font-size: 22px; }
+.modal-content input { width: 100%; padding: 10px; margin: 10px 0; background: rgba(255, 255, 255, 0.05); border: 1px solid #333; color: white; border-radius: 8px; }
+
+/* 5. Mobile Responsiveness */
+@media (max-width: 768px) {
+  .nav-links, .header-actions { display: none; }
+  .hero-card { flex-direction: column; padding: 20px; min-height: 450px; background-position: top center; } /* Adjust BG pos for mobile */
+  .content-left { width: 100%; text-align: center; justify-content: flex-start; margin-top: 10px; }
+  .chibi-circle { margin: 0 auto 15px auto; }
+  .main-heading { font-size: 30px; }
+}
+/* style.css (Add these features at the end) */
+
+.features-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.feature-box {
+    background: rgba(255, 255, 255, 0.9); /* White translucent look from your image */
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(255, 0, 127, 0.1);
+}
+
+.feature-icon { font-size: 24px; }
+.feature-text h3 { font-size: 16px; margin-bottom: 5px; color: #111; }
+.feature-text p { font-size: 12px; opacity: 0.8; line-height: 1.3; }
+
+.footer-socials { text-align: right; margin-top: 20px; font-size: 20px; }
+.footer-socials a { text-decoration: none; margin-left: 10px; opacity: 0.7; }
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .features-container { grid-template-columns: 1fr; }
+}

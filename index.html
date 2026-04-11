@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flora AI - Your Study Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-outer">
+        <header class="main-header">
+            <div class="logo">F Flora AI 🌸</div>
+            <div class="header-actions">
+                <button class="neon-btn login-btn" onclick="openModal()">Login</button>
+                <a href="#" class="signup-link" onclick="openModal()">+ New Student Join</a>
+            </div>
+        </header>
+
+        <div class="hero-card">
+            <div class="content-left">
+                <div class="chibi-circle">
+                    <img src="flora_chibi.png" alt="Flora Chibi">
+                </div>
+                <h1 class="main-heading">Meet your AI Study Partner.</h1>
+                <p class="main-description">Hi, I'm Flora! Your new best friend to help you with notes, homework, and making learning fun.</p>
+                <button class="neon-btn start-chat-btn" onclick="openModal()">Chat with Flora</button>
+            </div>
+            <span class="bg-neon-text">STUDY BUDDY</span>
+        </div>
+
+        <div class="features-container">
+            <div class="feature-box">
+                <div class="feature-icon">📚</div>
+                <div class="feature-text">
+                    <h3>Smart Notes</h3>
+                    <p>Get easy paragraph-style notes for any topic instantly.</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">💡</div>
+                <div class="feature-text">
+                    <h3>Easy Concept</h3>
+                    <p>Flora explains hard topics like a best friend would.</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">📝</div>
+                <div class="feature-text">
+                    <h3>HW Support</h3>
+                    <p>Stuck on homework? Flora is here to help 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 class="modal-heading">Join Flora's Squad</h2>
+            <input type="text" id="userName" placeholder="Your Sweet Name">
+            <input type="email" id="userEmail" placeholder="Your Email">
+            <button class="neon-btn" style="width: 100%; margin-top: 15px;" onclick="startSession()">Let's Start!</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
