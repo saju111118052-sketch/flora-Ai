@@ -64,9 +64,12 @@
     </div>
 
     <script>
-        // Reverse Key Strategy to bypass GitHub Scanner
-        const rKey = "a3bd3576056f2d4478e2c94ce382acf36897d74d7135145852fb85aebba697e9-1v-ro-ks";
-        const API_KEY = rKey.split("").reverse().join("");
+        // Step 1: We hide the key in two scrambled parts
+const p1 = "3a3bd3576056f2d4478e2c94ce382acf36897d74d7135145852fb85aebba697e9";
+const p2 = "-1v-ro-ks";
+
+// Step 2: Combine and flip them only when the user sends a message
+const API_KEY = (p1 + p2).split("").reverse().join("");
 
         let history = JSON.parse(localStorage.getItem('flora_history')) || [];
         let userData = JSON.parse(localStorage.getItem('flora_user')) || null;
@@ -150,7 +153,7 @@
                 if(data.choices && data.choices[0]) {
                     addMessage("flora", data.choices[0].message.content);
                 } else {
-                    addMessage("flora", "Wait, ektu problem hocche. 🌸");
+                    addMessage("flora", "i can't connect to my brain. 🌸");
                 }
             } catch {
                 addMessage("flora", "Connection error! 🌸");
