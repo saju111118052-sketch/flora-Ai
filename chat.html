@@ -96,7 +96,7 @@
 <script>
     // Decoded API Key for OpenRouter 
     const secretKey = "c2stb3ItdjEtOGRmNTg4MDcwYThhYWM5MjQ5NTU2ZDU1NDYxMGFkNWY5ZDRlMDMxZDRjZTAxY2E5MTQzNDM3MzY3ZWQyZTkxNg==";
-    const API_KEY = atob(secretKey); 
+    const API_KEY = atob(secretKey).trim(); 
 
     let chatHistory = [];
     let userData = { name: "User", email: "" };
@@ -161,7 +161,7 @@
                 headers: {
                     "Authorization": `Bearer ${API_KEY.trim()}`,
                     "Content-Type": "application/json",
-                    "HTTP-Referer": "https://saju111118052-sketch.github.io",
+                    "HTTP-Referer": "https://saju111118052-sketch.github.io/flora-Ai/",
                     "X-Title": "Flora AI"
                 },
                 body: JSON.stringify({
