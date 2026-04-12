@@ -165,7 +165,7 @@
                     "X-Title": "Flora AI"
                 },
                 body: JSON.stringify({
-                    "model": "google/gemini-flash-1.5-exp:free",
+                    "model": "google/gemini-flash-1.5:free",
                     "messages": [
                         { "role": "system", "content": `You are Flora AI, a friendly and smart pink-themed assistant. The user's name is ${userData.name}. Keep your tone supportive, cheerful, and creative.` },
                         ...chatHistory.slice(-10)
