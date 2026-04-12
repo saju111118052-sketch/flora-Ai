@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flora AI - Global Edition</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flora AI - Your Smart Bestie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<style>
-:root { --main-pink: #ff007f; --bg-gradient: linear-gradient(135deg, #ff007f 0%, #ff69b4 100%); }
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-body { background: #f0f2f5; height: 100dvh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    <style>
+        :root { --main-pink: #ff007f; --bg-gradient: linear-gradient(135deg, #ff007f 0%, #ff69b4 100%); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #f0f2f5; height: 100dvh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 
-/* Login Screen */
-#loginOverlay { position: fixed; inset: 0; background: var(--bg-gradient); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; transition: 0.5s; }
-.login-card { background: white; padding: 40px 30px; border-radius: 30px; text-align: center; width: 100%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-.login-card h2 { color: var(--main-pink); margin-bottom: 20px; font-weight: 600; }
-.login-card input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #eee; border-radius: 15px; outline: none; background: #f9f9f9; }
-.login-card button { background: var(--main-pink); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; box-shadow: 0 10px 20px rgba(255,0,127,0.2); }
+        /* Login Screen */
+        #loginOverlay { position: fixed; inset: 0; background: var(--bg-gradient); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; transition: 0.5s; }
+        .login-card { background: white; padding: 40px 30px; border-radius: 30px; text-align: center; width: 100%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .login-card h2 { color: var(--main-pink); margin-bottom: 20px; font-weight: 600; }
+        .login-card input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #eee; border-radius: 15px; outline: none; background: #f9f9f9; }
+        .login-card button { background: var(--main-pink); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; box-shadow: 0 10px 20px rgba(255,0,127,0.2); }
 
-/* Main App Layout */
-.app-container { width: 100%; height: 100%; max-width: 500px; background: white; display: flex; flex-direction: column; position: relative; }
+        /* Main App Layout */
+        .app-container { width: 100%; height: 100%; max-width: 500px; background: white; display: flex; flex-direction: column; position: relative; }
 
-/* Header - Modern Pink Style */
-.header { background: var(--bg-gradient); padding: 50px 20px 20px; border-radius: 0 0 30px 30px; display: flex; align-items: center; justify-content: space-between; color: white; position: relative; }
-.header-info { display: flex; align-items: center; gap: 12px; }
-.flora-avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; background: white; }
-.header-text strong { display: block; font-size: 18px; }
-.header-text span { font-size: 11px; opacity: 0.9; display: flex; align-items: center; gap: 5px; }
-.status-dot { width: 7px; height: 7 status-dot; background: #00ff00; border-radius: 50%; }
-.menu-btn { font-size: 20px; cursor: pointer; padding: 5px; }
+        /* Header */
+        .header { background: var(--bg-gradient); padding: 50px 20px 20px; border-radius: 0 0 30px 30px; display: flex; align-items: center; justify-content: space-between; color: white; position: relative; }
+        .header-info { display: flex; align-items: center; gap: 12px; }
+        .flora-avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; background: white; object-fit: cover; }
+        .header-text strong { display: block; font-size: 18px; }
+        .header-text span { font-size: 11px; opacity: 0.9; display: flex; align-items: center; gap: 5px; }
+        .status-dot { width: 7px; height: 7px; background: #00ff00; border-radius: 50%; display: inline-block; }
+        .menu-btn { font-size: 20px; cursor: pointer; padding: 5px; }
 
-/* Message Area */
-#chatBox { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fff; }
-.msg { max-width: 80%; padding: 12px 18px; border-radius: 20px; font-size: 14px; line-height: 1.5; }
-.user-msg { align-self: flex-end; background: var(--main-pink); color: white; border-bottom-right-radius: 5px; }
-.flora-msg { align-self: flex-start; background: #f1f1f1; color: #333; border-bottom-left-radius: 5px; border: 1px solid #eee; }
+        /* Message Area */
+        #chatBox { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fff; }
+        .msg { max-width: 80%; padding: 12px 18px; border-radius: 20px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+        .user-msg { align-self: flex-end; background: var(--main-pink); color: white; border-bottom-right-radius: 5px; }
+        .flora-msg { align-self: flex-start; background: #f1f1f1; color: #333; border-bottom-left-radius: 5px; border: 1px solid #eee; }
 
-/* ChatGPT Style Input */
-.input-area { padding: 20px; background: white; display: flex; align-items: center; gap: 10px; border-top: 1px solid #f5f5f5; }
-.plus-btn { background: #f1f1f1; color: var(--main-pink); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.input-wrapper { flex: 1; background: #f1f1f1; border-radius: 25px; padding: 5px 15px; display: flex; align-items: center; }
-#userInput { flex: 1; border: none; background: transparent; padding: 10px; outline: none; font-size: 14px; }
-.send-btn { background: var(--main-pink); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; }
+        /* Input Area */
+        .input-area { padding: 20px; background: white; display: flex; align-items: center; gap: 10px; border-top: 1px solid #f5f5f5; }
+        .plus-btn { background: #f1f1f1; color: var(--main-pink); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .input-wrapper { flex: 1; background: #f1f1f1; border-radius: 25px; padding: 5px 15px; display: flex; align-items: center; }
+        #userInput { flex: 1; border: none; background: transparent; padding: 10px; outline: none; font-size: 14px; }
+        .send-btn { background: var(--main-pink); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; }
 
-/* Floating Menu */
-#menuOverlay { position: absolute; top: 90px; right: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; z-index: 1000; width: 180px; overflow: hidden; border: 1px solid #eee; }
-.menu-item { padding: 12px 15px; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
-.menu-item:hover { background: #f9f9f9; color: var(--main-pink); }
-</style>
+        /* Menu */
+        #menuOverlay { position: absolute; top: 90px; right: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; z-index: 1000; width: 180px; overflow: hidden; border: 1px solid #eee; }
+        .menu-item { padding: 12px 15px; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.2s; color: #333; }
+        .menu-item:hover { background: #f9f9f9; color: var(--main-pink); }
+    </style>
 </head>
 <body>
 
@@ -66,7 +66,7 @@ body { background: #f0f2f5; height: 100dvh; display: flex; align-items: center; 
     <div class="header">
         <div class="header-info">
             <i class="fas fa-chevron-left"></i>
-            <img src="https://i.ibb.co/VmxM6Hn/flora-chibi.png" class="flora-avatar">
+            <img src="flora_chibi.png" class="flora-avatar" alt="Flora" onerror="this.src='https://ui-avatars.com/api/?name=Flora&background=ff007f&color=fff'">
             <div class="header-text">
                 <strong>Flora AI</strong>
                 <span><div class="status-dot"></div> Online | Smart Mode</span>
@@ -76,7 +76,7 @@ body { background: #f0f2f5; height: 100dvh; display: flex; align-items: center; 
         
         <div id="menuOverlay">
             <div class="menu-item" onclick="location.reload()"><i class="fas fa-plus"></i> New Chat</div>
-            <div class="menu-item" onclick="alert('Conversation history is active.')"><i class="fas fa-history"></i> History</div>
+            <div class="menu-item" onclick="alert('History feature coming soon!')"><i class="fas fa-history"></i> History</div>
             <div class="menu-item" onclick="changeEmail()"><i class="fas fa-envelope"></i> Change Email</div>
         </div>
     </div>
@@ -94,82 +94,115 @@ body { background: #f0f2f5; height: 100dvh; display: flex; align-items: center; 
 </div>
 
 <script>
-const secretKey = "U2stb3ItdjEtZjllNzk2YmJlYTU4YmYyNTg1NDE1MzE3ZDQ3ZDc5ODYzZmNhMjgzZWM0OWMyZTg3NDRkMmY2NTA2NzUzZGIzYQ==";
-const API_KEY = atob(secretKey); 
+    // Decoded API Key for OpenRouter
+    const secretKey = "U2stb3ItdjEtZjllNzk2YmJlYTU4YmYyNTg1NDE1MzE3ZDQ3ZDc5ODYzZmNhMjgzZWM0OWMyZTg3NDRkMmY2NTA2NzUzZGIzYQ==";
+    const API_KEY = atob(secretKey); 
 
-let history = [];
-let userData = null;
+    let chatHistory = [];
+    let userData = { name: "User", email: "" };
 
-function startApp() {
-    const name = document.getElementById("userName").value.trim();
-    const email = document.getElementById("userEmail").value.trim();
-    if(!name || !email) { alert("Name and Email are required!"); return; }
-    
-    userData = { name, email };
-    document.getElementById("loginOverlay").style.opacity = "0";
-    setTimeout(() => document.getElementById("loginOverlay").style.display = "none", 500);
-    
-    // Dynamic Welcome Message - Uses whatever name is entered
-    addMessage("flora", `Hello ${name}! I'm Flora, your smart AI bestie. How can I help you today? 🌸`);
-}
-
-function toggleMenu() {
-    const menu = document.getElementById("menuOverlay");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-
-function addMessage(sender, text) {
-    const chatBox = document.getElementById("chatBox");
-    const div = document.createElement("div");
-    div.className = `msg ${sender}-msg`;
-    div.innerText = text;
-    chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    history.push({ role: sender === "flora" ? "assistant" : "user", content: text });
-}
-
-async function sendMessage() {
-    const input = document.getElementById("userInput");
-    const text = input.value.trim();
-    if(!text) return;
-
-    addMessage("user", text);
-    input.value = "";
-    
-    try {
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + API_KEY, // Correct header format
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://flora-ai.com",
-                "X-Title": "Flora AI"
-            },
-            body: JSON.stringify({
-                "model": "google/gemini-2.0-flash-exp:free",
-                "messages": [
-                    { "role": "system", "content": `You are Flora AI, a friendly and smart pink-themed assistant. You must address the user by their name: ${userData.name}. Always respond in English.` },
-                    ...history.slice(-10)
-                ]
-            })
-        });
-
-        const data = await response.json();
-        if (data.choices && data.choices[0]) {
-            addMessage("flora", data.choices[0].message.content);
-        } else {
-            addMessage("flora", "I encountered a minor system glitch. Please try again! 🌸");
+    function startApp() {
+        const nameInput = document.getElementById("userName").value.trim();
+        const emailInput = document.getElementById("userEmail").value.trim();
+        
+        if(!nameInput || !emailInput) { 
+            alert("Please enter both Name and Email!"); 
+            return; 
         }
-    } catch (e) {
-        addMessage("flora", "Connection failed. Please check your internet.");
+        
+        userData.name = nameInput;
+        userData.email = emailInput;
+        
+        document.getElementById("loginOverlay").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("loginOverlay").style.display = "none";
+            addMessage("flora", `Hi ${userData.name}! I'm Flora, your AI bestie. What's on your mind today? 🌸`);
+        }, 500);
     }
-}
 
-function changeEmail() { 
-    const newEmail = prompt("Enter new email:"); 
-    if(newEmail) userData.email = newEmail; 
-    toggleMenu(); 
-}
+    function toggleMenu() {
+        const menu = document.getElementById("menuOverlay");
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    function addMessage(sender, text) {
+        const chatBox = document.getElementById("chatBox");
+        const div = document.createElement("div");
+        div.className = `msg ${sender}-msg`;
+        div.innerText = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        
+        chatHistory.push({ 
+            role: sender === "flora" ? "assistant" : "user", 
+            content: text 
+        });
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById("userInput");
+        const text = input.value.trim();
+        if(!text) return;
+
+        addMessage("user", text);
+        input.value = "";
+        
+        const chatBox = document.getElementById("chatBox");
+        const typingDiv = document.createElement("div");
+        typingDiv.className = "msg flora-msg";
+        typingDiv.id = "typing-indicator";
+        typingDiv.innerText = "Flora is typing...";
+        chatBox.appendChild(typingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "https://flora-ai-app.com",
+                    "X-Title": "Flora AI"
+                },
+                body: JSON.stringify({
+                    "model": "google/gemini-flash-1.5-exp:free",
+                    "messages": [
+                        { "role": "system", "content": `You are Flora AI, a friendly and smart pink-themed assistant. The user's name is ${userData.name}. Keep your tone supportive, cheerful, and creative.` },
+                        ...chatHistory.slice(-10)
+                    ]
+                })
+            });
+
+            const data = await response.json();
+            const indicator = document.getElementById("typing-indicator");
+            if(indicator) indicator.remove();
+
+            if (data.choices && data.choices[0]) {
+                addMessage("flora", data.choices[0].message.content);
+            } else {
+                addMessage("flora", "I'm having a little trouble thinking. Try again in a second! 🌸");
+            }
+
+        } catch (error) {
+            const indicator = document.getElementById("typing-indicator");
+            if(indicator) indicator.remove();
+            addMessage("flora", "Connection failed. Please check your internet! 🌐");
+        }
+    }
+
+    function changeEmail() { 
+        const newEmail = prompt("Enter new email:"); 
+        if(newEmail) userData.email = newEmail; 
+        toggleMenu(); 
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.fa-ellipsis-h') && !event.target.matches('.menu-btn')) {
+            const menu = document.getElementById("menuOverlay");
+            if(menu) menu.style.display = "none";
+        }
+    }
 </script>
+
 </body>
 </html>
