@@ -17,8 +17,8 @@
         .login-card button { background: var(--main-pink); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-weight: 600; cursor: pointer; }
         .app-container { width: 100%; height: 100%; max-width: 500px; background: white; display: flex; flex-direction: column; position: relative; }
         .header { background: var(--bg-gradient); padding: 50px 20px 20px; border-radius: 0 0 30px 30px; display: flex; align-items: center; justify-content: space-between; color: white; }
-        .flora-avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; background: white; object-fit: cover; }
-        #chatBox { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .flora-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; background: white; object-fit: cover; }
+        #chatBox { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fff; }
         .msg { max-width: 80%; padding: 12px 18px; border-radius: 20px; font-size: 14px; word-wrap: break-word; }
         .user-msg { align-self: flex-end; background: var(--main-pink); color: white; border-bottom-right-radius: 5px; }
         .flora-msg { align-self: flex-start; background: #f1f1f1; color: #333; border-bottom-left-radius: 5px; }
@@ -32,8 +32,8 @@
 <div id="loginOverlay">
     <div class="login-card">
         <h2>Flora AI 🌸</h2>
-        <input id="userName" placeholder="Enter Name">
-        <input id="userEmail" placeholder="Enter Email">
+        <input id="userName" placeholder="Your Nickname">
+        <input id="userEmail" placeholder="Your Email">
         <button onclick="startApp()">Enter Chat</button>
     </div>
 </div>
@@ -41,7 +41,7 @@
 <div class="app-container">
     <div class="header">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="flora_chibi.png" class="flora-avatar" alt="Flora">
+            <img src="flora_chibi.png" class="flora-avatar" alt="Flora Chibi">
             <div>
                 <strong>Flora AI</strong><br>
                 <small>Online | Smart Mode</small>
@@ -60,12 +60,12 @@
     const encodedKey = "c2stb3ItdjEtYmU2MjU2MzNiNWQ2ODFiY2EwZWVlMjg1MTNiMmE0YWJkYzk1YTE4MzMyNzY2NGJkNWI4OGExN2E5YTk1N2FhNw==";
     const API_KEY = atob(encodedKey).trim();
     let chatHistory = [];
-    let name = "User";
+    let name = "Feeha";
 
     function startApp() {
         name = document.getElementById("userName").value.trim() || "Feeha";
         document.getElementById("loginOverlay").style.display = "none";
-        addMessage("flora", `Hi ${name}! I'm Flora 🌸. How can I help you today?`);
+        addMessage("flora", `Hi ${name}! I'm Flora 🌸. Your smart chibi bestie is back!`);
     }
 
     function addMessage(sender, text) {
@@ -89,7 +89,7 @@
         const typingDiv = document.createElement("div");
         typingDiv.className = "msg flora-msg";
         typingDiv.id = "typing";
-        typingDiv.innerText = "Flora is typing...";
+        typingDiv.innerText = "Flora is thinking...";
         document.getElementById("chatBox").appendChild(typingDiv);
         document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
 
@@ -105,8 +105,8 @@
                 body: JSON.stringify({
                     "model": "meta-llama/llama-3.2-3b-instruct:free",
                     "messages": [
-                        { "role": "system", "content": `You are Flora, a smart and cheerful bestie for ${name}. Talk like a close friend.` },
-                        ...chatHistory.slice(-10)
+                        { "role": "system", "content": `You are Flora, a smart and helpful bestie for ${name}.` },
+                        ...chatHistory.slice(-8)
                     ]
                 })
             });
@@ -115,15 +115,17 @@
             const indicator = document.getElementById("typing");
             if(indicator) indicator.remove();
 
-            if (data.choices && data.choices[0] && data.choices[0].message) {
+            if (response.status === 429) {
+                addMessage("flora", "Bestie, I'm a bit tired (Rate Limit)! Give me a minute to rest. 🌸");
+            } else if (data.choices && data.choices[0] && data.choices[0].message) {
                 addMessage("flora", data.choices[0].message.content);
             } else {
-                addMessage("flora", "Sorry bestie, my brain just glitched! Try again? 🌸");
+                addMessage("flora", "Oops, I glitched! Try sending that again. 🌸");
             }
         } catch (e) {
             const indicator = document.getElementById("typing");
             if(indicator) indicator.remove();
-            addMessage("flora", "Network error! Is the internet okay? 🌐");
+            addMessage("flora", "Network issue! Check your connection. 🌐");
         }
     }
 </script>
