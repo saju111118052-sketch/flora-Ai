@@ -45,7 +45,8 @@
 
         /* Menu */
         #menuOverlay { position: absolute; top: 90px; right: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; z-index: 1000; width: 180px; border: 1px solid #eee; }
-        .menu-item { padding: 12px 15px; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; color: #333; }
+        .menu-item { padding: 12px 15px; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; color: #333; transition: 0.2s; }
+        .menu-item:hover { background: #f9f9f9; color: var(--main-pink); }
     </style>
 </head>
 <body>
@@ -64,7 +65,7 @@
     <div class="header">
         <div class="header-info">
             <i class="fas fa-chevron-left"></i>
-            <img src="https://ui-avatars.com/api/?name=Flora&background=ff007f&color=fff" class="flora-avatar" alt="Flora">
+            <img src="flora_chibi.png" class="flora-avatar" alt="Flora" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Flora&backgroundColor=ff007f'">
             <div class="header-text">
                 <strong>Flora AI</strong>
                 <span><div class="status-dot"></div> Online | Smart Mode</span>
@@ -108,7 +109,7 @@
         userData.email = emailInput;
         
         document.getElementById("loginOverlay").style.display = "none";
-        addMessage("flora", `Hi ${userData.name}! I'm Flora 🌸. How can I help you?`);
+        addMessage("flora", `Hi ${userData.name}! I'm Flora 🌸. Your smart pink bestie is ready! How can I help you today?`);
     }
 
     function toggleMenu() {
@@ -144,6 +145,7 @@
         typingDiv.id = "typing-indicator";
         typingDiv.innerText = "Flora is typing...";
         chatBox.appendChild(typingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
 
         try {
             const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -157,21 +159,28 @@
                 body: JSON.stringify({
                     "model": "meta-llama/llama-3.2-3b-instruct:free",
                     "messages": [
-                        { "role": "system", "content": `You are Flora AI. User: ${userData.name}` },
-                        ...chatHistory.slice(-5)
+                        { "role": "system", "content": `You are Flora AI, a friendly, smart, and cheerful bestie. You love the color pink and helping ${userData.name}. Always give clear and helpful answers.` },
+                        ...chatHistory.slice(-10)
                     ]
                 })
             });
 
             const data = await response.json();
-            document.getElementById("typing-indicator").remove();
+            const indicator = document.getElementById("typing-indicator");
+            if (indicator) indicator.remove();
 
-            if (data.choices && data.choices[0]) {
-                addMessage("flora", data.choices[0].message.content);
+            if (data.choices && data.choices[0] && data.choices[0].message) {
+                const floraReply = data.choices[0].message.content;
+                addMessage("flora", floraReply || "I'm sorry, I couldn't find the right words. Let's try again! 🌸");
+            } else {
+                addMessage("flora", "My brain is a bit fuzzy. Can you ask that again?");
+                console.log("Response data error:", data);
             }
         } catch (error) {
-            document.getElementById("typing-indicator").remove();
-            addMessage("flora", "Error connecting to server.");
+            const indicator = document.getElementById("typing-indicator");
+            if (indicator) indicator.remove();
+            addMessage("flora", "Connection failed. Please check your internet! 🌐");
+            console.error("Fetch error:", error);
         }
     }
 
@@ -179,6 +188,13 @@
         const newEmail = prompt("New email:"); 
         if(newEmail) userData.email = newEmail; 
         toggleMenu(); 
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.fa-ellipsis-h') && !event.target.matches('.menu-btn')) {
+            const menu = document.getElementById("menuOverlay");
+            if(menu) menu.style.display = "none";
+        }
     }
 </script>
 </body>
