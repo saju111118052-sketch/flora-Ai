@@ -94,9 +94,10 @@
 </div>
 
 <script>
-    // Decoded API Key for OpenRouter 
-    const secretKey = "c2stb3ItdjEtOGRmNTg4MDcwYThhYWM5MjQ5NTU2ZDU1NDYxMGFkNWY5ZDRlMDMxZDRjZTAxY2E5MTQzNDM3MzY3ZWQyZTkxNg==";
+    // Decoded API Key for OpenRouter
+    const secretKey = "c2stb3ItdjEtYmU2MjU2MzNiNWQ2ODFiY2EwZWVlMjg1MTNiMmE0YWJkYzk1YTE4MzMyNzY2NGJkNWI4OGExN2E5YTk1N2FhNw==";
     const API_KEY = atob(secretKey).trim(); 
+
 
     let chatHistory = [];
     let userData = { name: "User", email: "" };
@@ -156,40 +157,40 @@
         chatBox.scrollTop = chatBox.scrollHeight;
 
         try {
-            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${API_KEY.trim()}`,
-                    "Content-Type": "application/json",
-                    "HTTP-Referer": "https://saju111118052-sketch.github.io/flora-Ai/",
-                    "X-Title": "Flora AI"
-                },
-                body: JSON.stringify({
-                    "model": "deepseek/deepseek-chat:free",
-                    "messages": [
-                        { "role": "system", "content": `You are Flora AI, a friendly and smart pink-themed assistant. The user's name is ${userData.name}. Keep your tone supportive, cheerful, and creative.` },
-                        ...chatHistory.slice(-10)
-                    ]
-                })
-            });
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + API_KEY,
+                "HTTP-Referer": "https://saju111118052-sketch.github.io/flora-ai/",
+                "X-Title": "Flora Ai",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "model": "meta-llama/llama-3.2-3b-instruct:free",
+                "messages": [
+                    { "role": "system", "content": "You are Flora AI, a supportive and creative assistant." },
+                    { "role": "user", "content": text }
+                ]
+            })
+        });
 
-            const data = await response.json();
-            const indicator = document.getElementById("typing-indicator");
-            if(indicator) indicator.remove();
+        const data = await response.json();
+        const indicator = document.getElementById("typing-indicator");
+        if (indicator) indicator.remove();
 
-            if (data.choices && data.choices[0]) {
-                addMessage("flora", data.choices[0].message.content);
-            } else {
-                addMessage("flora", "I'm having a little trouble thinking. Try again in a second! 🌸");
-            }
-
-        } catch (error) {
-            const indicator = document.getElementById("typing-indicator");
-            if(indicator) indicator.remove();
-            addMessage("flora", "Connection failed. Please check your internet! 🌐");
+        if (data.choices && data.choices[0]) {
+            addMessage("flora", data.choices[0].message.content);
+        } else {
+            addMessage("flora", "System error: Unable to process response.");
+            console.error("API Error:", data);
         }
-    }
 
+    } catch (error) {
+        const indicator = document.getElementById("typing-indicator");
+        if (indicator) indicator.remove();
+        addMessage("flora", "Network error. Please try again.");
+        console.error("Connection Error:", error);
+    }
     function changeEmail() { 
         const newEmail = prompt("Enter new email:"); 
         if(newEmail) userData.email = newEmail; 
