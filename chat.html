@@ -25,14 +25,13 @@
         .input-area { padding: 20px; background: white; display: flex; gap: 10px; border-top: 1px solid #eee; }
         #userInput { flex: 1; border: none; background: #f1f1f1; padding: 12px 20px; border-radius: 25px; outline: none; }
         .send-btn { background: var(--main-pink); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
-        #typing { font-style: italic; opacity: 0.7; }
     </style>
 </head>
 <body>
 
 <div id="loginOverlay">
     <div class="login-card">
-        <h2>Flora AI 🌸</h2>
+        <h2>Flora AI</h2>
         <input id="userName" placeholder="Your Nickname">
         <input id="userEmail" placeholder="Your Email">
         <button onclick="startApp()">Enter Chat</button>
@@ -42,7 +41,7 @@
 <div class="app-container">
     <div class="header">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="flora_chibi.png" class="flora-avatar" alt="Flora Chibi">
+            <img src="flora_chibi.png" class="flora-avatar" alt="Flora">
             <div>
                 <strong>Flora AI</strong><br>
                 <small>Online | Fast Mode</small>
@@ -52,22 +51,24 @@
     </div>
     <div id="chatBox"></div>
     <div class="input-area">
-        <input id="userInput" placeholder="Ask Flora anything..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <input id="userInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter')sendMessage()">
         <button class="send-btn" onclick="sendMessage()">Send</button>
     </div>
 </div>
 
 <script>
-    // Decoded key will be used for Groq API
+    // Encoded Groq API Key
     const encodedKey = "R3NrX3F0V0xwNk92eEh1QllFVTViWGpCV0dyeWIzRllmb0tqTERtQ25RV0lHSWNnRjVhUzhGQ20=";
     const API_KEY = atob(encodedKey).trim();
+    
     let chatHistory = [];
-    let name = "Feeha";
+    let name = "User";
 
     function startApp() {
-        name = document.getElementById("userName").value.trim() || "Feeha";
+        const inputName = document.getElementById("userName").value.trim();
+        name = inputName || "Friend";
         document.getElementById("loginOverlay").style.display = "none";
-        addMessage("flora", `Hi ${name}! I'm Flora 🌸. Your smart chibi bestie is ready! How can I help you today?`);
+        addMessage("flora", "Hi " + name + "! I'm Flora, your AI bestie. How can I help you today?");
     }
 
     function addMessage(sender, text) {
@@ -77,6 +78,8 @@
         div.innerText = text;
         chatBox.appendChild(div);
         chatBox.scrollTop = chatBox.scrollHeight;
+        
+        // Save to history for context
         chatHistory.push({ role: (sender === "flora" ? "assistant" : "user"), content: text });
     }
 
@@ -88,13 +91,13 @@
         addMessage("user", text);
         input.value = "";
 
-        const chatBox = document.getElementById("chatBox");
+        // Typing indicator
         const typingDiv = document.createElement("div");
         typingDiv.className = "msg flora-msg";
         typingDiv.id = "typing";
         typingDiv.innerText = "Flora is thinking...";
-        chatBox.appendChild(typingDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
+        document.getElementById("chatBox").appendChild(typingDiv);
+        document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
 
         try {
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -106,8 +109,8 @@
                 body: JSON.stringify({
                     "model": "llama-3.1-8b-instant",
                     "messages": [
-                        { "role": "system", "content": `You are Flora, a smart and cute chibi bestie for ${name}. Talk like a real friend. If the user speaks in Bangla, reply in Bangla. If they speak in English, reply in English.` },
-                        ...chatHistory.slice(-10)
+                        { "role": "system", "content": "You are Flora, a smart and friendly AI assistant. Keep your tone cheerful and helpful." },
+                        ...chatHistory.slice(-10) // Send last 10 messages for context
                     ],
                     "temperature": 0.7
                 })
@@ -117,17 +120,15 @@
             const indicator = document.getElementById("typing");
             if(indicator) indicator.remove();
 
-            if (response.status === 429) {
-                addMessage("flora", "Bestie, I've talked too much! Give me 30 seconds to breathe. 🌸");
-            } else if (data.choices && data.choices[0] && data.choices[0].message) {
+            if (data.choices && data.choices[0]) {
                 addMessage("flora", data.choices[0].message.content);
             } else {
-                addMessage("flora", "Oops, my brain took a detour! Try again, bestie. 🌸");
+                addMessage("flora", "I'm having a little trouble connecting. Please try again!");
             }
         } catch (e) {
             const indicator = document.getElementById("typing");
             if(indicator) indicator.remove();
-            addMessage("flora", "Network issue! Make sure you're connected to the internet. 🌐");
+            addMessage("flora", "Connection error. Please check your internet.");
         }
     }
 </script>
