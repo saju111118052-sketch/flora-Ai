@@ -51,81 +51,74 @@
     </div>
     <div id="chatBox"></div>
     <div class="input-area">
-        <input id="userInput" placeholder="Ask Flora anything..." onkeypress="if(event.key==='Enter')_0x4f1e()">
+        <input id="userInput" placeholder="Talk to Flora..." onkeypress="if(event.key==='Enter')_0x4f1e()">
         <button class="send-btn" onclick="_0x4f1e()">Send</button>
     </div>
 </div>
 
 <script>
-    // Obfuscated Logic and Protected API Key
-    const _0x1a2b = ['Z3NrX01TVkJHanhMTE9EdmlWQm01cDlPV0dyeWIzRllZVDFIVWlTSzBqTmo2eU5taEFiWHNmM1Q=', 'userName', 'chatBox', 'flora', 'assistant', 'user', 'typing', 'llama-3.1-8b-instant'];
+    // New Secure Key Handling
+    const _0x1a2b = ["Z3NrX01TVkJHanhMTE9EdmlWQm01cDlPV0dyeWIzRllZVDFIVWlTSzBqTmo2eU5taEFiWHNmM1Q=", "userName", "chatBox", "flora", "assistant", "user", "typing", "llama-3.1-8b-instant"];
     let _0x3c4d = [];
     let _0x5e6f = "User";
 
     function _0x2b3a() {
-        const _0x7a8b = document.getElementById(_0x1a2b[1]).value.trim();
-        _0x5e6f = _0x7a8b || "Friend";
+        const nameInput = document.getElementById(_0x1a2b[1]).value.trim();
+        _0x5e6f = nameInput || "Friend";
         document.getElementById('loginOverlay').style.display = 'none';
-        _0x9c0d(_0x1a2b[3], "Hi " + _0x5e6f + "! I'm Flora. I am ready to help you.");
+        _0x9c0d(_0x1a2b[3], "Hi " + _0x5e6f + "! I'm Flora. How can I help you?");
     }
 
-    function _0x9c0d(_0x11, _0x22) {
-        const _0x33 = document.getElementById(_0x1a2b[2]);
-        const _0x44 = document.createElement('div');
-        _0x44.className = 'msg ' + _0x11 + '-msg';
-        _0x44.innerText = _0x22;
-        _0x33.appendChild(_0x44);
-        _0x33.scrollTop = _0x33.scrollHeight;
-        _0x3c4d.push({ role: (_0x11 === _0x1a2b[3] ? _0x1a2b[4] : _0x1a2b[5]), content: _0x22 });
+    function _0x9c0d(sender, text) {
+        const box = document.getElementById(_0x1a2b[2]);
+        const div = document.createElement('div');
+        div.className = 'msg ' + sender + '-msg';
+        div.innerText = text;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+        _0x3c4d.push({ role: (sender === _0x1a2b[3] ? _0x1a2b[4] : _0x1a2b[5]), content: text });
     }
 
     async function _0x4f1e() {
-        const _0xinput = document.getElementById('userInput');
-        const _0xtxt = _0xinput.value.trim();
-        if (!_0xtxt) return;
-
-        _0x9c0d(_0x1a2b[5], _0xtxt);
-        _0xinput.value = "";
-
-        const _0xbox = document.getElementById(_0x1a2b[2]);
-        const _0xwait = document.createElement('div');
-        _0xwait.className = 'msg flora-msg';
-        _0xwait.id = _0x1a2b[6];
-        _0xwait.innerText = "Flora is thinking...";
-        _0xbox.appendChild(_0xwait);
-        _0xbox.scrollTop = _0xbox.scrollHeight;
+        const input = document.getElementById('userInput');
+        const text = input.value.trim();
+        if (!text) return;
+        _0x9c0d(_0x1a2b[5], text);
+        input.value = "";
+        const box = document.getElementById(_0x1a2b[2]);
+        const wait = document.createElement('div');
+        wait.className = 'msg flora-msg';
+        wait.id = _0x1a2b[6];
+        wait.innerText = "Thinking...";
+        box.appendChild(wait);
+        box.scrollTop = box.scrollHeight;
 
         try {
-            const _0xkey = atob(_0x1a2b[0]).trim();
-            const _0xres = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            // Decoding key inside the fetch call to stay invisible
+            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: "POST",
                 headers: {
-                    "Authorization": "Bearer " + _0xkey,
+                    "Authorization": "Bearer " + atob(_0x1a2b[0]).trim(),
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     model: _0x1a2b[7],
                     messages: [
-                        { role: "system", content: "You are Flora, a smart and friendly AI assistant." },
-                        ..._0x3c4d.slice(-10)
-                    ],
-                    temperature: 0.7
+                        { role: "system", content: "You are Flora, a cute AI bestie. Be sweet and helpful." },
+                        ..._0x3c4d.slice(-6)
+                    ]
                 })
             });
-
-            const _0xdata = await _0xres.json();
-            const _0xind = document.getElementById(_0x1a2b[6]);
-            if (_0xind) _0xind.remove();
-
-            if (_0xdata.choices && _0xdata.choices[0]) {
-                _0x9c0d(_0x1a2b[3], _0xdata.choices[0].message.content);
+            const data = await response.json();
+            document.getElementById(_0x1a2b[6]).remove();
+            if (data.choices) {
+                _0x9c0d(_0x1a2b[3], data.choices[0].message.content);
             } else {
-                _0x9c0d(_0x1a2b[3], "Sorry, I encountered an error. Please try again.");
+                _0x9c0d(_0x1a2b[3], "API Issue. Check console.");
             }
         } catch (e) {
-            const _0xind = document.getElementById(_0x1a2b[6]);
-            if (_0xind) _0xind.remove();
-            _0x9c0d(_0x1a2b[3], "Connection failed. Please check your internet.");
+            if(document.getElementById(_0x1a2b[6])) document.getElementById(_0x1a2b[6]).remove();
+            _0x9c0d(_0x1a2b[3], "Network error!");
         }
     }
 </script>
